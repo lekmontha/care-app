@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ดูแลผู้ป่วยติดบ้าน ติดเตียง</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6f3;--sf:#fff;--tx:#1b2a26;--mu:#5f706a;--ln:#dce3df;--pine:#1f5c4d;--pine-t:#e1efe9;--g1:#2f8f5b;--g2:#c98a12;--g3:#d0622b;--g4:#b3261e;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121917;--sf:#1b2522;--tx:#e6eeea;--mu:#93a49d;--ln:#2c3a35;--pine:#6cc2a5;--pine-t:#1f3a31;--g1:#5cc489;--g2:#e5ac3d;--g3:#ee8a58;--g4:#f07a72;--on:#10201b}}
+:root[data-theme="dark"]{--bg:#121917;--sf:#1b2522;--tx:#e6eeea;--mu:#93a49d;--ln:#2c3a35;--pine:#6cc2a5;--pine-t:#1f3a31;--g1:#5cc489;--g2:#e5ac3d;--g3:#ee8a58;--g4:#f07a72;--on:#10201b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 "IBM Plex Sans Thai",system-ui,sans-serif}
+.app{max-width:520px;margin:0 auto;padding:14px 14px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}
+.top h1{font-size:19px;margin:0;font-weight:700}.top small{color:var(--mu)}
+select,input,textarea,button{font:inherit;color:var(--tx)}
+select,input,textarea{width:100%;background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:10px 12px}
+select{width:auto;padding:6px 8px;font-size:14px}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid var(--pine);outline-offset:1px}
+.sw{position:relative}.list{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--sf);border:1px solid var(--ln);border-radius:10px;max-height:300px;overflow:auto;z-index:5;box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.it{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--ln);padding:10px 12px;cursor:pointer}.it:last-child{border:0}.it:hover{background:var(--pine-t)}.it span{color:var(--mu);font-size:13px}
+.empty{padding:14px;color:var(--mu);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.stats div{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:8px 6px;text-align:center;font-size:12px;color:var(--mu)}.stats b{display:block;font-size:20px;color:var(--tx)}
+.pc{background:var(--sf);border:1px solid var(--ln);border-left:6px solid var(--gc);border-radius:12px;padding:14px;margin-top:12px}
+.pc h2{margin:0;font-size:20px}.pc p{margin:2px 0 0;color:var(--mu);font-size:14px}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.kv div{background:var(--bg);border-radius:8px;padding:8px;font-size:12px;color:var(--mu)}.kv b{display:block;font-size:18px;color:var(--tx)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;padding:11px 16px;font-weight:600;cursor:pointer;background:var(--pine);color:var(--on)}
+.btn.o{background:none;border:1px solid var(--pine);color:var(--pine)}.btn.w{width:100%}
+.row{display:flex;gap:8px;margin-top:12px}.row .btn{flex:1}
+.tabs{display:flex;gap:4px;margin-top:14px;border-bottom:1px solid var(--ln)}
+.tabs button{background:none;border:0;padding:10px 9px;color:var(--mu);font-weight:500;cursor:pointer;border-bottom:3px solid transparent}.tabs .on{color:var(--pine);border-color:var(--pine);font-weight:700}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-top:12px}
+.g2c{display:grid;grid-template-columns:1fr 1fr;gap:10px}.g3c{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+label{display:block;font-size:13px;color:var(--mu);margin-bottom:3px}
+.ph{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.ph img{width:72px;height:72px;object-fit:cover;border-radius:8px}
+.vis{border-left:3px solid var(--pine);padding:2px 0 2px 12px;margin:12px 0}.vis b{font-size:14px}.vis p{margin:2px 0;font-size:14px;color:var(--mu)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:20;overflow:auto;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}.modal.open{display:block}
+.sheet{max-width:520px;margin:0 auto;background:var(--sf);border-radius:14px;padding:16px}
+.q{padding:10px 0;border-bottom:1px solid var(--ln)}.q b{font-size:15px}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:5px 0;font-size:14px;cursor:pointer}.opt input{width:auto;margin-top:5px}
+.res{position:sticky;bottom:0;background:var(--pine-t);border-radius:10px;padding:12px;margin-top:12px;font-weight:600}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--pine);color:var(--on);padding:10px 18px;border-radius:99px;display:none;z-index:30}
+</style></head><body><div class="app">
+<div class="top"><div><h1>ดูแลผู้ป่วยที่บ้าน</h1><small>ระบบดูแลผู้ป่วยติดบ้าน ติดเตียง</small></div>
+<div style="text-align:right"><small id="who">กำลังโหลด…</small></div></div>
+<div class="sw"><input id="q" type="search" placeholder="พิมพ์ชื่อหรือบ้านเลขที่ผู้ป่วย" autocomplete="off"><div id="ls" class="list" hidden></div></div>
+<div id="home"></div><div id="pt"></div></div>
+<div class="modal" id="m"><div class="sheet" id="ms"></div></div><div class="toast" id="t"></div>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+/* ===== ตั้งค่า 2 ค่านี้ก่อนอัปโหลด ===== */
+const LIFF_ID="ใส่ LIFF ID 2012158333-1rIhpNZM";
+const API_URL="https://script.google.com/macros/s/AKfycbz_04MyLDfr2sisYn8338u6GBe7EphXfR5kXUmTU2ZhihwDwPMshdk9jqRsnmhPIycEEw/exec";
+/* ======================================== */
+const PARAMS=Object.fromEntries(new URLSearchParams(location.search));
+</script>
+<script>
+let P=[];
+const CGS={C1:"สมศรี ใจดี",C2:"วันดี มีสุข",C3:"ประเสริฐ ศรีทอง"};
+const GC={1:"var(--g1)",2:"var(--g2)",3:"var(--g3)",4:"var(--g4)"};
+const GN={1:"ติดสังคม/เสี่ยงต่ำ",2:"ติดบ้านเล็กน้อย",3:"ติดบ้านมาก",4:"ติดเตียง"};
+const V={};let me="C1",cur=null,tab="rec",photos=[];
+const $=id=>document.getElementById(id);
+CGS.CM="CM ศิริพร ใจเย็น";
+P.forEach(p=>{p.adl0=p.adl;p.ah=[]});
+const LV=s=>s>=12?"ติดสังคม":s>=5?"ติดบ้าน":"ติดเตียง";
+
+const RK=[
+{n:"กลุ่ม 1 · ติดบ้าน (TAI B)",d:"ADL 6–11 ในไฟล์ ช่วยเหลือตัวเองได้มากที่สุดในกลุ่มผู้มีภาวะพึ่งพิง",r:["หกล้มและกระดูกหัก","กล้ามเนื้อลีบ ADL ลดลงจนติดเตียง","ซึมเศร้า แยกตัว","กินได้น้อย น้ำหนักลด","ความดัน/น้ำตาลคุมไม่ได้ ขาดยา"],p:["เน้นรักษาความสามารถเดิม ให้ทำกิจวัตรเองเท่าที่ทำได้","เดินหรือออกกำลังกายเบา ๆ ทุกวัน","จัดบ้านกันลื่น มีราวจับ แสงสว่างพอ","ชวนทำกิจกรรมและพบปะคนในชุมชน","วัด BP ชั่งน้ำหนักทุกครั้งที่เยี่ยม จัดยาให้กินต่อเนื่อง"]},
+{n:"กลุ่ม 2 · ติดบ้าน (TAI C)",d:"ADL 5–10 ในไฟล์ ติดบ้านและมีรหัส TAI กลุ่ม C ให้ CM ยืนยันภาวะเพิ่มเติมที่ทำให้อยู่กลุ่มนี้",r:["หกล้ม โดยเฉพาะตอนลุกและเดิน","ADL ลดลงจนเข้าเกณฑ์ติดเตียง (ค่า ADL ใกล้ 5)","ปัญหาการกลั้นปัสสาวะ/อุจจาระ","ซึมเศร้า ความจำถดถอย","กินได้น้อย น้ำหนักลด"],p:["ประเมิน ADL และ 9 ด้านถี่กว่ากลุ่ม 1 (ตามที่ CM กำหนด)","ช่วยพยุงหรืออยู่ใกล้เมื่อลุกเดิน จัดทางเดินปลอดภัย","จัดตารางเข้าห้องน้ำ ผิวแห้งสะอาด","ออกกำลังเบา ๆ ฝึกลุกนั่งทุกวัน","แจ้ง CM เมื่อ ADL ลดลงหรือหกล้ม"]},
+{n:"กลุ่ม 3 · ติดเตียง (TAI I3)",d:"ADL 4 ทุกราย ติดเตียงระดับขอบ ยังมีความสามารถเหลืออยู่บ้าง",r:["แผลกดทับ","หกล้มขณะลุกนั่งหรือย้ายตัว","สำลัก","ADL ลดลงเป็นดูแลเต็มตัว","ผู้ดูแลเหนื่อยล้า"],p:["ฝึกลุกนั่งและย้ายตัวตามที่ทำได้ เพื่อรักษาความสามารถที่เหลือ","ตรวจผิวหนังทุกวัน ไม่ให้นอนทับจุดแดง","ยกหัวสูงตอนกินอาหาร","ขยับข้อและยืดกล้ามเนื้อทุกวัน","สอนและช่วยแบ่งเบาผู้ดูแล"]},
+{n:"กลุ่ม 4 · ติดเตียง (TAI I1–I2)",d:"ADL 0–4 ในไฟล์ ช่วยเหลือตัวเองได้น้อยที่สุด ต้องการการดูแลใกล้ชิดที่สุด",r:["แผลกดทับ (เสี่ยงสูงสุด)","สำลักและปอดอักเสบ","ข้อติดแข็ง กล้ามเนื้อลีบ","ติดเชื้อทางเดินปัสสาวะ ท้องผูก","ขาดน้ำและสารอาหาร","ผู้ดูแลเหนื่อยล้า"],p:["พลิกตัวตามแผนที่พยาบาลกำหนด ตรวจผิวทุกวัน","ปรึกษา CM เรื่องที่นอนหรือเบาะลดแรงกด","ยกหัวสูงขณะกินและหลังกิน ไม่นอนราบทันที","ดื่มน้ำเพียงพอ ดูแลความสะอาดและการขับถ่าย","แจ้ง CM เมื่อมีไข้ ไอ กินได้น้อย หรือผิวแดงไม่จาง","คุยกับญาติเรื่องเป้าหมายการดูแล และช่วยดูแลผู้ดูแล"]}];
+const DM=[["สมรรถภาพสมอง","Mini-Cog",["คะแนน Mini-Cog ≤ 3 จาก 5 (จำคำ 3 คำ + วาดนาฬิกา)"],"ส่ง รพ.สต. ประเมินต่อด้วย TMSE หรือ MMSE-Thai"],
+["ซึมเศร้า","2Q",["ใน 2 สัปดาห์ รู้สึกหดหู่ เศร้า ท้อแท้ สิ้นหวัง","ใน 2 สัปดาห์ รู้สึกเบื่อ ทำอะไรก็ไม่เพลิดเพลิน"],"ประเมินต่อด้วย 9Q โดยพยาบาล ถ้ามีความคิดอยากตายหรือทำร้ายตัวเอง แจ้ง CM ทันที"],
+["หกล้ม","TUG",["หกล้มภายใน 6 เดือนที่ผ่านมา","ทดสอบ TUG ใช้เวลา ≥ 12 วินาที หรือทำไม่ได้"],"ประเมินปัจจัยเสี่ยงหกล้ม จัดบ้านกันลื่น ราวจับ"],
+["การกลั้นปัสสาวะ","คำถามคัดกรอง",["ปัสสาวะเล็ดหรือราดจนมีปัญหาในชีวิตประจำวัน"],"แจ้ง CM/พยาบาลเพื่อประเมินต่อ"],
+["โภชนาการ","คำถามคัดกรอง",["น้ำหนักลดมากกว่า 3 กก. ใน 3 เดือน","ความอยากอาหารลดลง"],"ประเมินต่อด้วย MNA ที่ รพ.สต."],
+["การนอน","คำถามคัดกรอง",["มีปัญหาการนอนหลับ","ง่วงหรืออ่อนเพลียตอนกลางวัน"],"แจ้ง CM เพื่อประเมินต่อ"],
+["การมองเห็น","คำถามคัดกรอง",["มีปัญหามองระยะไกลหรืออ่านหนังสือ"],"ส่งทดสอบ Snellen Chart หรือพบแพทย์"],
+["การได้ยิน","Finger rub test",["ไม่ได้ยินเสียงนิ้วถูกันที่หูข้างใดข้างหนึ่ง"],"ส่งตรวจการได้ยิน"],
+["ช่องปาก","คำถามคัดกรอง",["เคี้ยวอาหารแข็งลำบาก","เจ็บปวดในช่องปาก"],"ส่งต่อทันตบุคลากร"]];
+function riskTab(){const p=cur,b=RK[p.g-1],n=p.nd;
+ return `<div class="card"><b>${b.n}</b><p style="margin:2px 0 8px;color:var(--mu);font-size:14px">${b.d} · ADL ปัจจุบัน ${p.adl}</p>${(p.adl>=5)!==(p.g<=2)?`<p style="color:var(--g4);font-size:14px">ADL ล่าสุดไม่ตรงกับกลุ่มเดิม ให้ CM ทบทวนการจัดกลุ่ม</p>`:""}<b style="font-size:14px">ความเสี่ยงที่ต้องเฝ้าระวัง</b><ul>${b.r.map(x=>`<li>${x}</li>`).join("")}</ul><b style="font-size:14px">การป้องกัน</b><ul>${b.p.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+ <div class="card"><b>ประเมินผู้สูงอายุ 9 ด้าน</b>${n?`<p style="margin:2px 0;color:var(--mu);font-size:13px">ประเมินล่าสุด ${n.t} · ${n.by}</p>`+DM.map((d,i)=>`<div class="vis" style="border-color:${n.f[i]?"var(--g4)":"var(--g1)"}"><b>${d[0]}</b> · ${n.f[i]?"พบความเสี่ยง":"ปกติ"}${n.r&&n.r[i]?`<p>${n.r[i]}</p>`:""}${n.f[i]?`<p style="color:var(--tx)">ขั้นต่อไป: ${d[3]}</p>${careHtml(i)}`:""}</div>`).join(""):`<div class="empty">ยังไม่เคยประเมิน</div>`}<button class="btn w" id="nd" style="margin-top:10px">${n?"ประเมิน 9 ด้านรอบใหม่":"เริ่มประเมิน 9 ด้าน"}</button></div>`}
+const YN=[["ไม่ใช่",0],["ใช่",1]],L4=[["ไม่มีเลย",0],["เป็นบางวัน (1–7 วัน)",1],["เป็นบ่อย (>7 วัน)",2],["เป็นทุกวัน",3]];
+const yn=(k,q)=>({k,q,o:YN}),any=(a,ks)=>ks.some(k=>a[k]===1);
+const Q9=["เบื่อ ไม่สนใจอยากทำอะไร","ไม่สบายใจ ซึมเศร้า ท้อแท้","หลับยาก หรือหลับ ๆ ตื่น ๆ หรือหลับมากไป","เหนื่อยง่าย หรือไม่ค่อยมีแรง","เบื่ออาหาร หรือกินมากเกินไป","รู้สึกไม่ดีกับตัวเอง คิดว่าตัวเองล้มเหลว หรือทำให้ตนเองหรือครอบครัวผิดหวัง","สมาธิไม่ดีเวลาทำอะไร เช่น ดูโทรทัศน์ ฟังวิทยุ","พูดช้า ทำอะไรช้าลงจนคนอื่นสังเกตได้ หรือกระสับกระส่ายอยู่นิ่งไม่ได้","คิดทำร้ายตนเอง หรือคิดว่าถ้าตายไปคงจะดี"];
+const s9=a=>(a.q1||0)+(a.q2||0)>0;
+const D9=[
+{t:"สมรรถภาพสมอง",s:"Mini-Cog (เต็ม 5)",f:[{k:"a",q:"จำคำ 3 คำ (หลานสาว สวรรค์ ภูเขา) ได้กี่คำ",o:[["0 คำ",0],["1 คำ",1],["2 คำ",2],["3 คำ",3]]},{k:"b",q:"วาดหน้าปัดนาฬิกาเวลา 11.10 น.",o:[["วาดถูก (2)",2],["วาดไม่ถูก (0)",0]]}],ev:a=>{const s=a.a+a.b;return{fl:s<=3,x:`Mini-Cog ${s}/5 · ${s<=3?"มีภาวะการรู้คิดบกพร่อง":"ปกติ"}`}}},
+{t:"ภาวะซึมเศร้า",s:"2Q และ 9Q",f:[yn("q1","ใน 2 สัปดาห์ รู้สึกหดหู่ เศร้า ท้อแท้ สิ้นหวัง"),yn("q2","ใน 2 สัปดาห์ รู้สึกเบื่อ ทำอะไรก็ไม่เพลิดเพลิน"),...Q9.map((q,j)=>({k:"n"+j,q:"9Q ข้อ "+(j+1)+": "+q,o:L4,show:s9}))],ev:a=>{if(!s9(a))return{fl:false,x:"2Q ปกติ"};let s=0;Q9.forEach((_,j)=>s+=a["n"+j]||0);const lv=s<7?"ไม่มีอาการหรือน้อยมาก":s<=12?"ระดับน้อย":s<=18?"ระดับปานกลาง":"ระดับรุนแรง";return{fl:true,x:`2Q มีความเสี่ยง · 9Q ${s}/27 ${lv}${a.n8>0?" · ข้อ 9 มีความคิดทำร้ายตนเอง แจ้ง CM ทันที":""}${s>=7?" · ให้พยาบาลประเมิน 8Q":""}`}}},
+{t:"หกล้ม",s:"TUG + ประวัติหกล้ม",f:[yn("a","หกล้มภายใน 6 เดือนที่ผ่านมา"),{k:"b",q:"Timed Up and Go (ลุกจากเก้าอี้ เดิน 3 เมตร กลับมานั่ง)",o:[["ใช้เวลา < 12 วินาที",0],["ใช้เวลา ≥ 12 วินาที",1],["ทำไม่ได้",1]]}],ev:a=>({fl:any(a,["a","b"]),x:`${a.a?"มีประวัติหกล้ม":"ไม่เคยหกล้ม"} · TUG ${a.b?"เสี่ยงหกล้ม":"ปกติ"}`})},
+{t:"การกลั้นปัสสาวะ",s:"คำถามคัดกรอง",f:[yn("a","มีปัสสาวะเล็ดหรือราดจนมีปัญหาในการใช้ชีวิตประจำวัน")],ev:a=>({fl:!!a.a,x:a.a?"มีปัญหากลั้นปัสสาวะ":"ปกติ"})},
+{t:"โภชนาการ",s:"MNA ฉบับสั้น (เต็ม 14)",f:[{k:"n1",q:"3 เดือนที่ผ่านมา กินอาหารได้น้อยลงเพราะอยากอาหารลดลง ย่อย เคี้ยว หรือกลืนลำบากหรือไม่",o:[["น้อยลงอย่างมาก",0],["น้อยลงปานกลาง",1],["ไม่เปลี่ยนแปลง",2]]},{k:"n2",q:"3 เดือนที่ผ่านมา น้ำหนักลดหรือไม่",o:[["ลดมากกว่า 3 กก.",0],["ไม่ทราบ",1],["ลด 1–3 กก.",2],["ไม่ลด",3]]},{k:"n3",q:"เคลื่อนไหวได้เองหรือไม่",o:[["นอนเตียง/ใช้รถเข็นตลอด",0],["ลุกได้บ้างแต่ออกนอกบ้านเองไม่ได้",1],["เดินและเคลื่อนไหวปกติ",2]]},{k:"n4",q:"3 เดือนที่ผ่านมา มีความเครียดรุนแรงหรือป่วยเฉียบพลันหรือไม่",o:[["มี",0],["ไม่มี",2]]},{k:"n5",q:"มีปัญหาทางจิตประสาทหรือไม่",o:[["ความจำเสื่อมหรือซึมเศร้ารุนแรง",0],["ความจำเสื่อมเล็กน้อย",1],["ไม่มี",2]]},{k:"n6",q:"ดัชนีมวลกาย (BMI)",o:[["< 19",0],["19 – < 21",1],["21 – < 23",2],["≥ 23",3],["ไม่ทราบ (ตอบข้อเส้นรอบวงน่อง)",-1]]},{k:"n7",q:"เส้นรอบวงน่อง (ซม.)",o:[["< 31",0],["≥ 31",3]],show:a=>a.n6===-1}],ev:a=>{const s=a.n1+a.n2+a.n3+a.n4+a.n5+(a.n6>=0?a.n6:a.n7||0);return{fl:s<=11,x:`MNA ${s}/14 · ${s>=12?"โภชนาการปกติ":s>=8?"เสี่ยงขาดสารอาหาร":"ขาดสารอาหาร"}${s<=11?" · ประเมินต่อด้วย MNA ฉบับเต็ม":""}`}}},
+{t:"การนอน",s:"คำถามคัดกรอง",f:[yn("a","มีปัญหาการนอนหลับ"),yn("b","มีอาการง่วง อ่อนเพลียตอนกลางวัน")],ev:a=>({fl:any(a,["a","b"]),x:any(a,["a","b"])?"มีปัญหาการนอน":"ปกติ"})},
+{t:"การมองเห็น",s:"คัดกรองสุขภาวะทางตา",f:[yn("a","นับนิ้วที่ระยะ 3 เมตรได้ถูกน้อยกว่า 3 ใน 4 ครั้ง (สวมแว่นถ้าใช้อยู่)"),yn("b","อ่านหนังสือพิมพ์หนึ่งหน้าที่ระยะ 1 ฟุตไม่ได้"),yn("c","ต้อกระจก: ปิดตาดูทีละข้าง ตามัวคล้ายมีหมอกบัง"),yn("d","ต้อหิน: มองชัดแต่ตรงกลาง ไม่เห็นรอบข้าง หรือเดินชนประตู/สิ่งของบ่อย"),yn("e","จอตาเสื่อม: เห็นจุดดำกลางภาพ หรือภาพบิดเบี้ยว")],ev:a=>{const r=any(a,["a","b","c","d","e"]);return{fl:r,x:r?"มีปัญหาการมองเห็น":"ปกติ"}}},
+{t:"การได้ยิน",s:"Finger rub test",f:[yn("a","หูขวา: ไม่ได้ยินเสียงนิ้วถูกัน (ห่างจากหู ~1 นิ้ว)"),yn("b","หูซ้าย: ไม่ได้ยินเสียงนิ้วถูกัน")],ev:a=>({fl:any(a,["a","b"]),x:any(a,["a","b"])?"มีปัญหาการได้ยิน":"ปกติ"})},
+{t:"ช่องปาก",s:"ประเมินสุขภาพช่องปาก",f:[yn("a","มีฟัน/รากฟันผุที่ไม่สามารถป้องกันหรือให้บริการได้"),yn("b","มีเหงือกบวม ฝีหนอง หรือฟันโยก"),yn("c","ฟันแท้น้อยกว่า 20 ซี่ (4 คู่สบ)"),yn("d","มีก้อน รอยแดง รอยขาว หรือแผลเรื้อรังนานกว่า 2 สัปดาห์"),yn("e","ปากแห้ง น้ำลายแห้ง ต้องดื่มน้ำตามบ่อย หรือลิ้นแห้งติดเพดาน"),{k:"g",q:"สภาพช่องปากสะอาดหรือไม่",o:[["สะอาด",0],["ไม่สะอาด",1]]}],ev:a=>{const r=any(a,["a","b","c","d","e"]);return{fl:r,x:`${r?"พบปัญหาช่องปาก":"ปกติ"}${a.g?" · ช่องปากไม่สะอาด ควรฝึกแปรงฟัน":""}`}}}];
+const CARE=[
+[["ทบทวนวัน เวลา สถานที่ ชวนพูดคุยและทำกิจกรรมที่คุ้นเคยทุกวัน","จัดตารางประจำวันให้สม่ำเสมอ มีปฏิทินและนาฬิกาเรือนใหญ่","ให้ญาติช่วยดูแลเรื่องยาและของมีค่า"],["พูดด้วยน้ำเสียงสงบ บอกวัน เวลา ก่อนทำกิจกรรมดูแล","เปิดเพลงหรือภาพที่คุ้นเคย ให้ได้รับแสงสว่างตอนกลางวัน","ถ้าสับสนเฉียบพลัน มีไข้หรือซึมลง แจ้ง CM ทันที"]],
+[["รับฟังโดยไม่ตัดสิน ชวนทำกิจกรรมที่ชอบและพบปะคนในชุมชน","ให้ออกแดดและขยับตัวเบา ๆ ทุกวัน","ถ้าไม่ดีขึ้นใน 2 สัปดาห์หรือมีความคิดอยากตาย แจ้ง CM ทันที"],["อยู่ใกล้ชิดและพูดคุยทุกวัน ไม่ปล่อยให้อยู่ตามลำพังนาน","จัดเตียงให้เห็นหน้าต่างหรือคนในบ้าน นำกิจกรรมที่ชอบมาที่เตียง","สังเกตการกินและการนอน ถ้ามีความคิดอยากตายหรือทำร้ายตนเอง แจ้ง CM ทันที"]],
+[["จัดบ้านกันลื่น มีราวจับ แสงสว่างพอ พื้นแห้ง","ใส่รองเท้าพื้นกันลื่น ลุกช้า ๆ นั่งพักก่อนยืน","ปรึกษา CM เรื่องยาที่ทำให้ง่วงหรือเวียนศีรษะ"],["ใช้ราวกั้นเตียงตามความเหมาะสม ล็อกล้อรถเข็นทุกครั้ง","มีคนช่วยทุกครั้งที่ย้ายตัวหรือลุกนั่ง","ตั้งเตียงสูงพอดี ไม่ให้ตกเตียง"]],
+[["จัดตารางเข้าห้องน้ำทุก 2–3 ชั่วโมง ให้ห้องน้ำใกล้และทางเดินสะดวก","ดื่มน้ำเพียงพอตอนกลางวัน ลดน้ำก่อนนอน เลี่ยงชากาแฟ","ถ้าแสบขัด ปัสสาวะขุ่น หรือมีไข้ แจ้ง CM"],["เปลี่ยนผ้าอ้อมหรือแผ่นรองทันทีเมื่อเปียก ล้างและซับผิวให้แห้ง","ทาครีมกันผิวเปื่อย และระวังแผลกดทับ","สังเกตสี กลิ่นปัสสาวะ ไข้ ซึม แล้วแจ้ง CM"]],
+[["แบ่งกินมื้อเล็ก ๆ บ่อยขึ้น เพิ่มโปรตีน เช่น ไข่ นม ปลา เต้าหู้","ชั่งน้ำหนักทุกครั้งที่เยี่ยมและบันทึก","ถ้าเคี้ยวกลืนลำบากหรือน้ำหนักลดต่อเนื่อง แจ้ง CM"],["ยกหัวสูงขณะกินและ 30 นาทีหลังกิน อาหารตามที่พยาบาลแนะนำ","ดื่มน้ำเพียงพอ ทำความสะอาดช่องปากก่อนกิน","ถ้าไอหรือสำลักขณะกิน แจ้ง CM"]],
+[["เข้านอนและตื่นเวลาเดิม รับแสงแดดตอนเช้า","เลี่ยงชากาแฟช่วงบ่าย ลดการงีบกลางวัน","ถ้านอนไม่หลับต่อเนื่องหรือง่วงผิดปกติ แจ้ง CM อย่าซื้อยานอนหลับเอง"],["จัดท่านอนสบาย พลิกตัวตามเวลา ลดเสียงและแสงตอนกลางคืน","ให้มีกิจกรรมและแสงสว่างตอนกลางวัน ไม่ให้หลับยาว","สังเกตอาการปวดหรือหายใจลำบากที่ทำให้นอนไม่หลับ แจ้ง CM"]],
+[["พาตรวจสายตาและใส่แว่นที่เหมาะสม","เพิ่มแสงสว่างในบ้าน ทำเครื่องหมายขั้นบันได","ตามัวเฉียบพลัน เห็นแสงวาบ ตาแดงปวด รีบพบแพทย์"],["เพิ่มแสงสว่างที่เตียง วางของใช้ในที่เดิมให้เอื้อมถึง","บอกก่อนเข้าไปใกล้และก่อนทำกิจกรรม","พาไปตรวจตาที่ รพ.สต. หรือโรงพยาบาล"]],
+[["พูดช้า ชัด หันหน้าให้เห็นปาก ลดเสียงรบกวน","ส่งตรวจการได้ยินและพิจารณาเครื่องช่วยฟัง","เลี่ยงเสียงดัง ควบคุมโรคประจำตัว"],["เข้าไปในมุมที่เห็นหน้า แตะเบา ๆ ก่อนพูด","ใช้ภาพหรือท่าทางช่วยสื่อสาร","ส่งตรวจการได้ยิน"]],
+[["แปรงฟันวันละ 2 ครั้ง ทำความสะอาดฟันปลอม","พบทันตบุคลากรเรื่องฟันผุ เหงือกบวม แผลเรื้อรัง","เคี้ยวลำบากให้กินอาหารอ่อน"],["ทำความสะอาดช่องปากหลังอาหารและก่อนนอน (แปรงนุ่มหรือผ้าชุบน้ำ) ขณะยกศีรษะสูง","ถอดฟันปลอมทำความสะอาดทุกวัน","ช่วยลดความเสี่ยงสำลักและปอดอักเสบ ปรึกษาทันตบุคลากร"]]];
+const GX={1:"กลุ่ม 1: เน้นรักษาความสามารถเดิม ประเมินซ้ำตามรอบ",2:"กลุ่ม 2: ประเมินซ้ำถี่ขึ้น แจ้ง CM เมื่อ ADL ลดลง",3:"กลุ่ม 3: ให้ทำเองเท่าที่ทำได้ และมีคนดูแลความปลอดภัยทุกครั้งที่ย้ายตัว",4:"กลุ่ม 4: ปรึกษา CM วางแผนดูแลใกล้ชิด และคุยเป้าหมายการดูแลกับญาติ"};
+const careHtml=i=>`<b style="font-size:13px;display:block;margin-top:4px">วิธีดูแล</b><ul style="margin:2px 0;padding-left:20px;font-weight:400;color:var(--tx)">${CARE[i][cur.g>2?1:0].map(x=>`<li>${x}</li>`).join("")}</ul><div style="font-weight:400;color:var(--mu);font-size:13px">${GX[cur.g]}</div>`;
+const REL={R1:{n:"คุณมาลี",pi:1},R2:{n:"คุณสมชาย",pi:5},R3:{n:"คุณวิภา",pi:12}};
+Object.entries(REL).forEach(([k,v])=>CGS[k]="ญาติ (เดโม): "+v.n);
+const MH=[];
+const ST5=["มีปัญหาการนอน นอนไม่หลับหรือนอนมาก","มีสมาธิน้อยลง","หงุดหงิด กระวนกระวาย ว้าวุ่นใจ","รู้สึกเบื่อ เซ็ง","ไม่อยากพบปะผู้คน"];
+const ST5L=s=>s<=4?"เครียดน้อย":s<=7?"เครียดปานกลาง":s<=9?"เครียดมาก":"เครียดมากที่สุด";
+const lv9=s=>s<7?"ไม่มีอาการหรือน้อยมาก":s<=12?"ระดับน้อย":s<=18?"ระดับปานกลาง":"ระดับรุนแรง";
+const CRIT=`<details class="card"><summary style="cursor:pointer"><b>เกณฑ์การแปลผลและการแจ้ง CM</b></summary><div style="font-size:14px;margin-top:8px"><b>ST-5 ความเครียด (เต็ม 15)</b><br>0–4 เครียดน้อย · 5–7 เครียดปานกลาง · 8–9 เครียดมาก · 10–15 เครียดมากที่สุด<br><b style="display:block;margin-top:8px">9Q ภาวะซึมเศร้า (เต็ม 27) ทำเมื่อ 2Q ตอบ "ใช่" ข้อใดข้อหนึ่ง</b>น้อยกว่า 7 ไม่มีหรือน้อยมาก · 7–12 น้อย · 13–18 ปานกลาง · 19 ขึ้นไป รุนแรง<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--pine-t)"><b>ระบบแจ้ง CM เมื่อ</b><br>• ST-5 ตั้งแต่ 8 ขึ้นไป<br>• 9Q ตั้งแต่ 7 ขึ้นไป<br>• เร่งด่วน: ตอบว่ามีความคิดทำร้ายตัวเอง (ข้อ 6) หรือ 9Q ข้อ 9 มีคะแนน</div><p style="color:var(--mu);margin:8px 0 0">เป็นการคัดกรองเบื้องต้น ไม่ใช่การวินิจฉัย</p></div></details>`;
+const resHtml=x=>`<div class="card"><b>ผลล่าสุด ${x.t}</b><div class="kv"><div>ST-5<b>${x.s}/15</b></div><div style="grid-column:span 2">ระดับความเครียด<b>${x.lv}</b></div></div><p style="margin:8px 0 0">${x.n9!=null?`ภาวะซึมเศร้า (9Q): ${x.n9}/27 · ${lv9(x.n9)}`:"ภาวะซึมเศร้า (2Q): ไม่พบความเสี่ยง"}</p><p style="margin:8px 0 0">${x.alert?"ขอบคุณที่บอกนะคะ ระบบแจ้ง CM ให้ติดต่อกลับเพื่อช่วยดูแลแล้ว":x.s<=4?"ใจยังแข็งแรงดี รักษาจังหวะพักผ่อนและกิจกรรมที่ชอบไว้ค่ะ":"เริ่มมีความเครียด ลองพักสั้น ๆ ระหว่างวัน ขอให้คนในครอบครัวผลัดช่วยดูแล แล้วเช็กอีกครั้งเดือนหน้า"}</p>${x.alert?`<p style="color:var(--g4);margin:8px 0 0">ถ้ารู้สึกแย่มากหรือคิดทำร้ายตัวเอง โทรสายด่วนสุขภาพจิต 1323 ได้ตลอด 24 ชั่วโมง</p>`:""}</div>`;
+function relHome(){const r=REL[me],last=MH.find(x=>x.rel===me);$("pt").innerHTML="";
+ $("home").innerHTML=`<div class="card" style="border-left:6px solid var(--pine)"><div style="color:var(--mu);font-size:13px">ข้อความจาก LINE OA · ดูแลผู้ป่วยที่บ้าน</div><b style="font-size:17px">🌿 เช็กสุขภาพใจประจำเดือน</b><p style="margin:6px 0 10px">สวัสดีค่ะ ${r.n} ผู้ดูแลก็ต้องดูแลใจตัวเองด้วยนะคะ ใช้เวลาไม่ถึง 1 นาที</p><button class="btn w" id="mh">เริ่มทำแบบประเมิน</button></div>${last?resHtml(last):""}${CRIT}<div class="card" style="color:var(--mu);font-size:14px">เพื่อความเป็นส่วนตัว ญาติเห็นเฉพาะแบบเช็กสุขภาพใจของตนเองเท่านั้น ไม่สามารถดูข้อมูลของผู้ป่วยได้ หากต้องการสอบถามอาการ กรุณาติดต่อ CG หรือ CM โดยตรง</div>`;
+ $("mh").onclick=openMh}
+function openMh(){const O=[["แทบไม่มี",0],["เป็นบางครั้ง",1],["บ่อยครั้ง",2],["เป็นประจำ",3]],Y=[["ไม่ใช่",0],["ใช่",1]],op=(n,a)=>`<div style="display:flex;flex-wrap:wrap;column-gap:14px">${a.map(([l,v])=>`<label class="opt"><input type="radio" name="${n}" value="${v}">${l}</label>`).join("")}</div>`,gv=n=>{const r=document.querySelector(`input[name=${n}]:checked`);return r?+r.value:null};
+ $("ms").onchange=()=>{$("d9").style.display=(gv("q1")||0)+(gv("q2")||0)>0?"":"none"};
+ $("ms").innerHTML=`<h2 style="margin:0 0 2px;font-size:18px">เช็กสุขภาพใจประจำเดือน</h2><p style="margin:0;color:var(--mu);font-size:14px">ส่วนที่ 1 ความเครียด (ST-5): ในช่วง 2–4 สัปดาห์ที่ผ่านมา มีอาการเหล่านี้บ่อยแค่ไหน</p>`+ST5.map((q,i)=>`<div class="q"><b>${i+1}. ${q}</b>${op("s"+i,O)}</div>`).join("")+`<p style="margin:12px 0 0;color:var(--mu);font-size:14px">ส่วนที่ 2 อารมณ์ (2Q): ใน 2 สัปดาห์ที่ผ่านมา</p><div class="q"><b>6. รู้สึกหดหู่ เศร้า ท้อแท้ สิ้นหวัง</b>${op("q1",Y)}</div><div class="q"><b>7. รู้สึกเบื่อ ทำอะไรก็ไม่เพลิดเพลิน</b>${op("q2",Y)}</div><div id="d9" style="display:none"><p style="margin:12px 0 0;color:var(--mu);font-size:14px">ส่วนที่ 3 (9Q): ใน 2 สัปดาห์ที่ผ่านมา มีอาการเหล่านี้บ่อยแค่ไหน</p>${Q9.map((q,j)=>`<div class="q"><b>9Q ข้อ ${j+1}: ${q}</b>${op("n"+j,L4)}</div>`).join("")}</div><div class="q"><b>8. ช่วงนี้มีความคิดอยากทำร้ายตัวเอง หรือรู้สึกไม่อยากมีชีวิตอยู่หรือไม่</b>${op("sf",[["ไม่มี",0],["มี",1]])}</div><div class="row"><button class="btn o" id="x">ยกเลิก</button><button class="btn" id="ok">ส่งผล</button></div>`;
+ $("m").classList.add("open");$("x").onclick=()=>$("m").classList.remove("open");
+ $("ok").onclick=()=>{let s=0;for(let i=0;i<5;i++){const v=gv("s"+i);if(v===null){toast("ตอบข้อ "+(i+1)+" ให้ครบ");return}s+=v}
+  const q1=gv("q1"),q2=gv("q2"),sf=gv("sf");if(q1===null||q2===null||sf===null){toast("ตอบข้อ 6–8 ให้ครบ");return}
+  let n9=null,i9=0;if(q1+q2>0){n9=0;for(let j=0;j<9;j++){const v=gv("n"+j);if(v===null){toast("ตอบ 9Q ข้อ "+(j+1)+" ให้ครบ");return}n9+=v;if(j==8)i9=v}}
+  const safe=sf===1||i9>0,rs=[];if(s>=8)rs.push("ST-5 ≥ 8");if(n9!==null&&n9>=7)rs.push("9Q ≥ 7");if(sf===1)rs.push("ความคิดทำร้ายตัวเอง");if(i9>0)rs.push("9Q ข้อ 9");
+  call("saveMH",{s:[0,1,2,3,4].map(i=>gv("s"+i)),d1:q1,d2:q2,n9,i9,sf}).catch(fail);MH.unshift({rel:me,name:REL[me].n,pi:REL[me].pi,ts:Date.now(),t:new Date().toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"}),s,lv:ST5L(s),n9,safe,rs,alert:rs.length>0});$("m").classList.remove("open");relHome()}}
+async function openInv(){$("ms").onchange=null;$("ms").innerHTML=`<p style="margin:0">กำลังสร้างรหัส…</p>`;$("m").classList.add("open");
+ try{const c=(await call("createInvite",{pid:PID(cur.i)})).code;
+ $("ms").innerHTML=`<h2 style="margin:0 0 6px;font-size:18px">เชิญญาติเข้า LINE</h2><p style="margin:0 0 8px;color:var(--mu);font-size:14px">ผู้ป่วย: ${esc(cur.n)}</p><div class="res" style="text-align:center;font-size:22px;letter-spacing:1px">${c}</div><ol style="font-size:14px;padding-left:20px"><li>ให้ญาติเพิ่มเพื่อน LINE OA</li><li>พิมพ์รหัสนี้ในแชตภายใน 24 ชั่วโมง</li><li>ญาติกดยินยอมการเก็บข้อมูลสุขภาพใจ (PDPA)</li><li>ระบบผูกบัญชีญาติกับผู้ป่วยรายนี้</li></ol><p style="font-size:14px;color:var(--mu)">ญาติจะเห็นเฉพาะแบบเช็กสุขภาพใจของตนเอง ไม่เห็นข้อมูลผู้ป่วย และผลของญาติเห็นเฉพาะ CM</p><button class="btn w" id="x">ปิด</button>`;
+ $("x").onclick=()=>$("m").classList.remove("open")}catch(e){$("m").classList.remove("open");fail(e)}}
+const spark=(a,c)=>{if(a.length<2)return`<span style="color:var(--mu);font-size:13px">ต้องมีอย่างน้อย 2 ครั้ง</span>`;const mn=Math.min(...a),mx=Math.max(...a),r=mx-mn||1,p=a.map((v,i)=>`${i*(160/(a.length-1))+4},${36-(v-mn)/r*30}`).join(" ");return`<svg viewBox="0 0 168 42" width="168" height="42" role="img" aria-label="กราฟแนวโน้ม"><polyline points="${p}" fill="none" stroke="${c}" stroke-width="2"/></svg>`};
+function sumTab(){const p=cur,h=V[p.i]||[],l=h[0],asc=[...h].reverse(),n=p.nd,ap=h.find(r=>r.ap),bp=asc.filter(r=>r.s).map(r=>+r.s),wt=asc.filter(r=>r.w).map(r=>+r.w),bm=h.find(r=>r.bmi),fl=n?DM.filter((d,i)=>n.f[i]).map(d=>d[0]):[];
+ return `<div class="card"><b>สรุปรายบุคคล</b><div class="kv" style="margin-top:8px"><div>เยี่ยมแล้ว<b>${h.length} ครั้ง</b></div><div>เยี่ยมล่าสุด<b style="font-size:14px">${l?l.t:"-"}</b></div><div>นัดครั้งถัดไป<b style="font-size:14px">${ap?ap.ap:"-"}</b></div></div></div>
+ <div class="card"><b>สัญญาณชีพล่าสุด</b><p style="margin:4px 0">${l?`BP ${l.s||"-"}/${l.d||"-"} · ชีพจร ${l.hr||"-"} · SpO₂ ${l.sp||"-"}% · ${l.bt||"-"}°C`:"ยังไม่มีบันทึก"}</p>${bm?`<p style="margin:4px 0">น้ำหนัก ${bm.w} กก. · BMI ${bm.bmi} (${bmiLv(bm.bmi)})</p>`:""}<div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px"><div><label>แนวโน้ม BP ตัวบน</label>${spark(bp,"var(--g4)")}</div><div><label>แนวโน้มน้ำหนัก</label>${spark(wt,"var(--pine)")}</div></div></div>
+ <div class="card"><b>การทำงานของร่างกาย</b><p style="margin:4px 0">ADL รอบเก่า ${p.adl0} (${LV(p.adl0)})${p.ah.length?` → รอบใหม่ ${p.adl} (${LV(p.adl)})`:" · ยังไม่ประเมินรอบใหม่"}</p><p style="margin:4px 0">กลุ่ม ${p.g} · TAI ${p.tai}</p></div>
+ <div class="card"><b>ผลประเมิน 9 ด้าน</b><p style="margin:4px 0">${n?`ประเมินเมื่อ ${n.t} · พบความเสี่ยง ${fl.length}/9 ด้าน${fl.length?": "+fl.join(" · "):""}`:"ยังไม่เคยประเมิน"}</p></div>`}
+const bar=(l,n,t,c)=>`<div style="display:flex;align-items:center;gap:8px;font-size:14px;margin-top:6px"><span style="width:118px">${l}</span><div style="flex:1;background:var(--bg);border-radius:6px;height:12px"><div style="width:${t?n/t*100:0}%;background:${c};height:12px;border-radius:6px"></div></div><b style="width:28px;text-align:right">${n}</b></div>`;
+function overall(){const T=P.length,asd=P.filter(p=>p.nd),rows=P.map(p=>(V[p.i]||[]).find(r=>r.bmi)).filter(Boolean),ch=P.filter(p=>p.ah.length),up=ch.filter(p=>p.adl>p.adl0).length,dn=ch.filter(p=>p.adl<p.adl0).length,E=t=>`<div class="empty" style="padding:6px 0">${t}</div>`,S=t=>`<div style="margin-top:12px;font-size:13px;color:var(--mu)">${t}</div>`;
+ return `<div class="card"><b>ภาพรวมทั้งหมด</b>${S("ผู้ป่วยแต่ละกลุ่ม")}${[1,2,3,4].map(g=>bar("กลุ่ม "+g,P.filter(p=>p.g==g).length,T,GC[g])).join("")}${S("ด้านที่พบความเสี่ยง (ประเมิน 9 ด้านแล้ว "+asd.length+" ราย)")}${asd.length?DM.map((d,i)=>bar(d[0],asd.filter(p=>p.nd.f[i]).length,asd.length,"var(--g3)")).join(""):E("ยังไม่มีผลประเมิน")}${S("BMI ล่าสุด ("+rows.length+" ราย)")}${rows.length?[["น้ำหนักน้อย",b=>b<18.5],["ปกติ",b=>b>=18.5&&b<23],["เกิน/อ้วน",b=>b>=23]].map(([l,f])=>bar(l,rows.filter(r=>f(r.bmi)).length,rows.length,"var(--pine)")).join(""):E("ยังไม่มีข้อมูล BMI")}${S("ADL รอบใหม่เทียบรอบเก่า ("+ch.length+" ราย)")}<p style="margin:4px 0;font-size:14px">ดีขึ้น ${up} · ลดลง ${dn} · เท่าเดิม ${ch.length-up-dn}</p>${S("สุขภาพใจของญาติ")}<p style="margin:4px 0;font-size:14px">แจ้งเตือน CM ${MH.filter(x=>x.alert).length} ราย จากที่ประเมิน ${MH.length} ครั้ง</p></div>`}
+const bmiOf=(w,t)=>{w=+w;t=+t;return w>0&&t>0?+(w/((t/100)**2)).toFixed(1):""};
+const bmiLv=b=>b<18.5?"น้ำหนักน้อย":b<23?"ปกติ":b<25?"น้ำหนักเกิน":b<30?"อ้วนระดับ 1":"อ้วนระดับ 2";
+const rd=i=>{const a={};D9[i].f.forEach(f=>{const r=document.querySelector(`input[name=d${i}_${f.k}]:checked`);if(r)a[f.k]=+r.value});return a};
+function upd(){let miss=null,done=0,fl=0;D9.forEach((d,i)=>{const a=rd(i);let ok=true;d.f.forEach(f=>{const v=!f.show||f.show(a);$(`w${i}_${f.k}`).style.display=v?"":"none";if(v&&a[f.k]===undefined)ok=false});const e=ok?d.ev(a):null;$(`r${i}`).innerHTML=ok?`<div>${e.fl?"⚠ ":"✓ "}${e.x}</div>${e.fl?careHtml(i):""}`:"";if(ok){done++;if(e.fl)fl++}if(!ok&&miss===null)miss=i});$("rs9").textContent=`ตอบครบ ${done}/9 ด้าน · พบความเสี่ยง ${fl} ด้าน`;return miss}
+function openNd(){
+ $("ms").onchange=upd;
+ $("ms").innerHTML=`<h2 style="margin:0 0 2px;font-size:18px">ประเมินผู้สูงอายุ 9 ด้าน</h2><p style="margin:0;color:var(--mu);font-size:14px">${esc(cur.n)} · ตามคู่มือคัดกรองและประเมินสุขภาพผู้สูงอายุ สธ. 2564</p>`+D9.map((d,i)=>`<div class="q"><b>${i+1}. ${d.t}</b> <span style="color:var(--mu);font-size:13px">${d.s}</span>${d.f.map(f=>`<div id="w${i}_${f.k}"><div style="margin-top:8px;font-size:14px">${f.q}</div><div style="display:flex;flex-wrap:wrap;column-gap:16px">${f.o.map(([l,v])=>`<label class="opt"><input type="radio" name="d${i}_${f.k}" value="${v}">${l}</label>`).join("")}</div></div>`).join("")}<div id="r${i}" style="margin-top:8px;font-weight:600;color:var(--pine);font-size:14px"></div></div>`).join("")+`<div class="res" id="rs9"></div><div class="row"><button class="btn o" id="x">ยกเลิก</button><button class="btn" id="ok">บันทึกผล</button></div>`;
+ $("m").classList.add("open");$("x").onclick=()=>$("m").classList.remove("open");{const b=(V[cur.i]||[]).find(r=>r.bmi);if(b){const v=b.bmi<19?0:b.bmi<21?1:b.bmi<23?2:3,r=document.querySelector(`input[name=d4_n6][value="${v}"]`);if(r)r.checked=true}}upd();
+ $("ok").onclick=()=>{const m=upd();if(m!==null){toast("ตอบข้อ "+(m+1)+" ให้ครบ");document.getElementById("r"+m).scrollIntoView({block:"center"});return}
+  const e=D9.map((d,i)=>d.ev(rd(i)));
+  cur.nd={t:new Date().toLocaleString("th-TH",{dateStyle:"medium"}),by:CGS[me],f:e.map(x=>x.fl),r:e.map(x=>x.x)};call("saveN9",{pid:PID(cur.i),a:n9in()}).catch(fail);$("m").classList.remove("open");tab="rk";toast("บันทึกผล 9 ด้านแล้ว");render()}}
+const adlBlock=()=>{const p=cur;return `<div class="card"><b>ประวัติการประเมิน ADL</b>${p.ah.map(a=>`<div class="vis"><b>รอบใหม่ ${a.s}/20 · ${LV(a.s)}</b><p>${a.t} · ${a.by} · ${a.s>a.prev?"ดีขึ้น":a.s<a.prev?"ลดลง":"เท่าเดิม"} จากรอบก่อน (${a.prev})</p></div>`).join("")}<div class="vis"><b>รอบเก่า ${p.adl0}/20 · ${LV(p.adl0)}</b><p>ข้อมูลเดิมจากรายชื่อผู้มีภาวะพึ่งพิง</p></div></div>`};
+function cmHome(){
+ const R=Object.values(V).flat().sort((a,b)=>b.ts-a.ts),ap=R.filter(r=>r.ap).sort((a,b)=>a.ap<b.ap?-1:1),ch=P.filter(p=>p.ah.length),nm=i=>P.find(p=>p.i==i).n;
+ const cgRows=Object.keys(CGS).filter(k=>/^C\d+$/.test(k)).map(k=>`<div class="vis"><b>${CGS[k]}</b><p>ผู้ป่วย ${P.filter(p=>p.cg===k).length} ราย · บันทึกเยี่ยม ${R.filter(r=>P.find(p=>p.i==r.i).cg===k).length} ครั้ง</p></div>`).join("");
+ const rec=r=>`<div class="card" data-i="${r.i}" style="cursor:pointer"><b>${esc(nm(r.i))}</b><div style="color:var(--mu);font-size:13px">${r.t} · โดย ${r.by}</div><div style="font-size:14px;margin-top:6px">BP ${r.s||"-"}/${r.d||"-"} · ชีพจร ${r.hr||"-"} · หายใจ ${r.rr||"-"} · ${r.bt||"-"}°C · SpO₂ ${r.sp||"-"}% · ${r.w||"-"} กก.${r.bmi?` · BMI ${r.bmi} (${bmiLv(r.bmi)})`:""}</div>${r.sy?`<div style="margin-top:4px">${esc(r.sy)}</div>`:""}<div class="ph">${(r.pu||[]).map(u=>`<img src="${u}" alt="รูปแนบ">`).join("")}</div>${r.ap?`<div style="color:var(--pine);font-size:14px;margin-top:4px">นัดครั้งถัดไป ${r.ap}</div>`:""}</div>`;
+ return `<div class="stats"><div><b>${P.length}</b>ผู้ป่วย</div><div><b>${R.length}</b>บันทึกเยี่ยม</div><div><b>${ch.length}</b>ADL รอบใหม่</div><div><b>${ap.length}</b>นัดหมาย</div></div>
+ ${overall()}
+ <div class="card"><b>ภาพรวมแต่ละ CG</b>${cgRows}</div>
+ <div class="card" id="al" style="border-left:6px solid var(--g4)"><b>แจ้งเตือนสุขภาพใจของญาติ</b>${MH.filter(x=>x.alert).map(x=>`<div class="vis" data-i="${x.pi}" style="cursor:pointer"><b>${x.safe?"เร่งด่วน · ":""}${esc(x.name)} (ญาติของ ${esc(nm(x.pi))})</b><p>ST-5 ${x.s}/15 · ${x.lv}${x.n9!=null?` · 9Q ${x.n9}/27`:""}${x.safe?" · มีความคิดทำร้ายตัวเอง":""} · เหตุที่แจ้ง: ${(x.rs||[]).join(", ")} · ${x.t}</p></div>`).join("")||`<div class="empty">ไม่มีแจ้งเตือน</div>`}</div>
+ ${CRIT}
+ <div class="card" id="ap"><b>นัดหมายที่จะถึง</b>${ap.length?ap.map(r=>`<div class="vis" data-i="${r.i}" style="cursor:pointer"><b>${esc(nm(r.i))}</b><p>${r.ap} · ${r.by}</p></div>`).join(""):`<div class="empty">ยังไม่มีนัดหมาย</div>`}</div>
+ <div class="card"><b>ผลประเมิน 9 ด้านที่พบความเสี่ยง</b>${P.filter(p=>p.nd&&p.nd.f.some(Boolean)).map(p=>`<div class="vis" data-i="${p.i}" style="cursor:pointer"><b>${esc(p.n)}</b><p>${DM.filter((d,i)=>p.nd.f[i]).map(d=>d[0]).join(" · ")}</p></div>`).join("")||`<div class="empty">ยังไม่มีผลประเมิน 9 ด้านที่พบความเสี่ยง</div>`}</div>
+ <div class="card"><b>ผลประเมิน ADL รอบใหม่</b>${ch.length?ch.map(p=>`<div class="vis" data-i="${p.i}" style="cursor:pointer"><b>${esc(p.n)}</b><p>รอบเก่า ${p.adl0} → รอบใหม่ ${p.adl} (${LV(p.adl)}) · โดย ${p.ah[0].by}</p></div>`).join(""):`<div class="empty">ยังไม่มี CG ประเมินรอบใหม่</div>`}</div>
+ <b style="display:block;margin-top:16px">บันทึกล่าสุดจาก CG (แตะเพื่อดูผู้ป่วย)</b>${R.map(rec).join("")}`}
+const mine=()=>me==="CM"?P:P.filter(p=>p.cg===me);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function toast(s){const t=$("t");t.textContent=s;t.style.display="block";setTimeout(()=>t.style.display="none",1800)}
+$("q").oninput=e=>{const k=e.target.value.trim(),l=$("ls");if(!k){l.hidden=true;return}
+ const r=mine().filter(p=>p.n.includes(k)||p.a.includes(k)).slice(0,8);
+ l.hidden=false;l.innerHTML=r.length?r.map(p=>`<button class="it" data-i="${p.i}">${esc(p.n)}<span>อายุ ${p.age} · ${esc(p.a)}</span></button>`).join(""):`<div class="empty">ไม่พบในรายชื่อผู้ป่วยของคุณ</div>`};
+$("ls").onclick=e=>{const b=e.target.closest(".it");if(!b)return;cur=P.find(p=>p.i==b.dataset.i);tab=NEXT||(me==="CM"?"his":"rec");photos=[];$("ls").hidden=true;$("q").value=cur.n;render()};
+function render(){const rel=me[0]==="R";$("q").parentElement.style.display=rel?"none":"";if(rel){cur=null;relHome();return}
+ const m=mine(),c=[1,2,3,4].map(g=>m.filter(p=>p.g==g).length);
+ $("home").innerHTML=cur?"":me==="CM"?cmHome():`<div class="stats">${c.map((n,i)=>`<div><b style="color:${GC[i+1]}">${n}</b>กลุ่ม ${i+1}</div>`).join("")}</div>${apptCard(m)}<div class="card"><b>ผู้ป่วยในความดูแล ${m.length} ราย</b><p style="color:var(--mu);font-size:14px;margin:4px 0 0">ค้นหาชื่อด้านบน หรือแตะรายชื่อเพื่อเริ่มบันทึก</p></div>`+m.map(p=>`<button class="it card" style="width:100%;margin-top:8px;border:1px solid var(--ln);border-left:6px solid ${GC[p.g]}" data-i="${p.i}">${esc(p.n)}<span>ADL ${p.adl} · ${p.tai}</span></button>`).join("");
+ $("home").onclick=e=>{const b=e.target.closest("[data-i]");if(!b)return;cur=P.find(p=>p.i==b.dataset.i);tab=NEXT||(me==="CM"?"his":"rec");photos=[];$("q").value=cur.n;render()};
+ if(!cur){$("pt").innerHTML="";return}
+ const p=cur,h=V[p.i]||[],last=h[0];
+ $("pt").innerHTML=`<div class="pc" style="--gc:${GC[p.g]}"><h2>${esc(p.n)}</h2><p>อายุ ${p.age} ปี · ${esc(p.a)} ต.บ้านพร้าว</p><p>เลขบัตร ${p.id}</p>
+ <div class="kv"><div>ADL ${p.ah.length?"ใหม่":"เก่า"}<b>${p.adl}</b></div><div>TAI<b>${p.tai}</b></div><div>กลุ่ม<b style="color:${GC[p.g]}">${p.g}</b></div></div>
+ ${p.ah.length?`<p>รอบเก่า ${p.adl0} → รอบใหม่ ${p.adl} (${LV(p.adl)}) · ${p.ah[0].t}</p>`:`<p>ADL เป็นคะแนนรอบเก่า ยังไม่ได้ประเมินรอบใหม่</p>`}${(()=>{const b=h.find(r=>r.bmi);return b?`<p>BMI ล่าสุด ${b.bmi} (${bmiLv(b.bmi)}) · น้ำหนัก ${b.w} กก.</p>`:""})()}<div class="row"><button class="btn" id="adl">ประเมิน ADL</button><button class="btn" id="n9">ประเมิน 9 ด้าน</button><button class="btn o" id="bk">เปลี่ยนผู้ป่วย</button></div><button class="btn o w" id="inv" style="margin-top:8px">เชิญญาติเข้า LINE</button></div>
+ <div class="tabs"><button data-t="rec" class="${tab=="rec"?"on":""}">บันทึกเยี่ยม</button><button data-t="his" class="${tab=="his"?"on":""}">ประวัติ (${h.length})</button><button data-t="rk" class="${tab=="rk"?"on":""}">ความเสี่ยง</button><button data-t="sm" class="${tab=="sm"?"on":""}">สรุป</button></div><div id="tb"></div>`;
+ $("bk").onclick=()=>{cur=null;$("q").value="";render()};$("adl").onclick=openAdl;$("n9").onclick=openNd;$("inv").onclick=openInv;
+ $("pt").querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()});
+ $("tb").innerHTML=tab=="rec"?form(last):tab=="rk"?riskTab():tab=="sm"?sumTab():hist(h);
+ if(tab=="rec")bind();if(tab=="rk")$("nd").onclick=openNd;
+}
+function form(l){return `<div class="card"><b>สัญญาณชีพ</b><div class="g3c" style="margin-top:8px">
+ <div><label>BP บน</label><input id="s" type="number" inputmode="numeric" placeholder="120"></div><div><label>BP ล่าง</label><input id="d" type="number" inputmode="numeric" placeholder="80"></div><div><label>ชีพจร /นาที</label><input id="hr" type="number" inputmode="numeric"></div>
+ <div><label>หายใจ /นาที</label><input id="rr" type="number" inputmode="numeric"></div><div><label>อุณหภูมิ °C</label><input id="bt" type="number" step="0.1" inputmode="decimal"></div><div><label>SpO₂ %</label><input id="sp" type="number" inputmode="numeric"></div></div>
+ <div class="g2c" style="margin-top:10px"><div><label>น้ำหนัก (กก.)${l&&l.w?` · ครั้งก่อน ${l.w}`:""}</label><input id="w" type="number" step="0.1" inputmode="decimal"></div><div><label>ส่วนสูง (ซม.)</label><input id="ht" type="number" step="0.1" inputmode="decimal" value="${cur.ht||""}"></div></div><div id="bmi" style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--pine-t);font-size:14px"></div></div>
+ <div class="card"><label>อาการของผู้ป่วย</label><textarea id="sy" rows="4" placeholder="เช่น กินได้ นอนหลับดี แผลกดทับก้นกบแห้งลง"></textarea>
+ <div style="margin-top:10px"><label>แนบรูป</label><input id="ph" type="file" accept="image/*" multiple></div><div class="ph" id="pv"></div></div>
+ <div class="card"><label>นัดหมายครั้งต่อไป</label><div class="g2c"><input id="ad" type="date"><input id="at" type="time"></div></div>
+ <button class="btn w" id="sv" style="margin-top:12px">บันทึกการเยี่ยม</button>`}
+function bind(){const ub=()=>{const b=bmiOf($("w").value,$("ht").value);$("bmi").innerHTML=b?`BMI <b>${b}</b> · ${bmiLv(b)} (เกณฑ์เอเชีย)`:"กรอกน้ำหนักและส่วนสูงเพื่อคำนวณ BMI"};$("w").oninput=$("ht").oninput=ub;ub();
+ $("ph").onchange=async e=>{for(const f of [...e.target.files].slice(0,3-photos.length))photos.push(await shrink(f));$("pv").innerHTML=photos.map(u=>`<img src="${u}" alt="รูปแนบ">`).join("")};
+ $("sv").onclick=()=>{const g=k=>$(k).value.trim();
+  if(!g("s")&&!g("w")&&!g("sy")){toast("กรอกอย่างน้อย 1 ช่อง");return}
+  if(g("ht"))cur.ht=+g("ht");(V[cur.i]=V[cur.i]||[]).unshift({i:cur.i,ts:Date.now(),t:new Date().toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"}),s:g("s"),d:g("d"),hr:g("hr"),rr:g("rr"),bt:g("bt"),sp:g("sp"),w:g("w"),ht:g("ht"),bmi:bmiOf(g("w"),g("ht")),sy:g("sy"),ph:photos.length,pu:[...photos],ap:g("ad")?g("ad")+" "+g("at"):"",by:CGS[me]});
+  const L=V[cur.i][0],pi=cur.i,ap=L.ap.trim().length>10?L.ap.trim():(L.ap.trim()?L.ap.trim()+" 09:00":"");busy(true);
+  call("saveVisit",{pid:PID(pi),s:L.s,d:L.d,hr:L.hr,rr:L.rr,bt:L.bt,sp:L.sp,w:L.w,ht:L.ht,sy:L.sy,ap,photos:[...photos]}).then(()=>{photos=[];tab="his";toast("บันทึกแล้ว");render()}).catch(er=>{V[pi].shift();fail(er);render()}).finally(()=>busy(false))}}
+function hist(h){return adlBlock()+`<div class="card">${h.length?h.map(r=>`<div class="vis"><b>${r.t}</b> <span style="color:var(--mu);font-size:13px">โดย ${r.by}</span>
+ <p>BP ${r.s||"-"}/${r.d||"-"} · ชีพจร ${r.hr||"-"} · หายใจ ${r.rr||"-"} · ${r.bt||"-"}°C · SpO₂ ${r.sp||"-"}% · น้ำหนัก ${r.w||"-"} กก.${r.bmi?` · BMI ${r.bmi} (${bmiLv(r.bmi)})`:""}</p>
+ ${r.sy?`<p style="color:var(--tx)">${esc(r.sy)}</p>`:""}${r.ph?`<p>แนบรูป ${r.ph} รูป</p>`:""}${r.ap?`<p>นัดครั้งถัดไป: ${r.ap}</p>`:""}</div>`).join(""):`<div class="empty">ยังไม่มีบันทึก เริ่มจากแท็บ “บันทึกเยี่ยม”</div>`}</div>`}
+const Q=[["Feeding (รับประทานอาหารเมื่อเตรียมสำรับไว้ให้เรียบร้อยต่อหน้า)","ไม่สามารถตักอาหารเข้าปากได้ ต้องมีคนป้อนให้|ตักอาหารเองได้แต่ต้องมีคนช่วย เช่น ช่วยใช้ช้อนตักเตรียมไว้ให้หรือตัดเป็นชิ้นเล็กๆ ไว้ล่วงหน้า|ตักอาหารและช่วยตัวเองได้เป็นปกติ"],
+["Grooming (ล้างหน้า หวีผม แปรงฟัน โกนหนวด ในระยะ 24–48 ชั่วโมงที่ผ่านมา)","ต้องการความช่วยเหลือ|ทำเองได้ (รวมทั้งที่ทำได้เองถ้าเตรียมอุปกรณ์ไว้ให้)"],
+["Transfer (ลุกนั่งจากที่นอน หรือจากเตียงไปยังเก้าอี้)","ไม่สามารถนั่งได้ (นั่งแล้วจะล้มเสมอ) หรือต้องใช้คนสองคนช่วยกันยกขึ้น|ต้องการความช่วยเหลืออย่างมากจึงจะนั่งได้ เช่น ใช้คนที่แข็งแรงหรือมีทักษะ 1 คน หรือใช้คนทั่วไป 2 คนพยุงหรือดันขึ้นมา|ต้องการความช่วยเหลือบ้าง เช่น บอกให้ทำตาม ช่วยพยุงเล็กน้อย หรือต้องมีคนดูแลเพื่อความปลอดภัย|ทำได้เอง"],
+["Toilet use (ใช้ห้องน้ำ)","ช่วยตัวเองไม่ได้|ทำเองได้บ้าง (อย่างน้อยทำความสะอาดตัวเองได้หลังเสร็จธุระ) แต่ต้องการความช่วยเหลือในบางสิ่ง|ช่วยตัวเองได้ดี (ขึ้นนั่งและลงจากโถส้วมเองได้ ทำความสะอาดได้เรียบร้อยหลังเสร็จธุระ ถอดใส่เสื้อผ้าได้)"],
+["Mobility (การเคลื่อนที่ภายในห้องหรือบ้าน)","เคลื่อนที่ไปไหนไม่ได้|ต้องใช้รถเข็นช่วยตัวเองให้เคลื่อนที่ได้เอง (ไม่ต้องมีคนเข็นให้) และต้องเข้าออกมุมห้องหรือประตูได้|เดินหรือเคลื่อนที่โดยมีคนช่วย เช่น พยุง บอกให้ทำตาม หรือต้องดูแลเพื่อความปลอดภัย|เดินหรือเคลื่อนที่ได้เอง"],
+["Dressing (การสวมใส่เสื้อผ้า)","ต้องมีคนสวมใส่ให้ ช่วยตัวเองแทบไม่ได้หรือได้น้อย|ช่วยตัวเองได้ประมาณร้อยละ 50 ที่เหลือต้องมีคนช่วย|ช่วยตัวเองได้ดี (รวมทั้งการติดกระดุม รูดซิป หรือใช้เสื้อผ้าที่ดัดแปลงให้เหมาะสมก็ได้)"],
+["Stairs (การขึ้นลงบันได 1 ชั้น)","ไม่สามารถทำได้|ต้องการคนช่วย|ขึ้นลงได้เอง (ถ้าต้องใช้เครื่องช่วยเดิน เช่น walker ต้องนำขึ้นลงได้ด้วย)"],
+["Bathing (การอาบน้ำ)","ต้องมีคนช่วยหรือทำให้|อาบน้ำเองได้"],
+["Bowels (การกลั้นการถ่ายอุจจาระในระยะ 1 สัปดาห์)","กลั้นไม่ได้ หรือต้องสวนอุจจาระอยู่เสมอ|กลั้นไม่ได้บางครั้ง (น้อยกว่า 1 ครั้งต่อสัปดาห์)|กลั้นได้เป็นปกติ"],
+["Bladder (การกลั้นปัสสาวะในระยะ 1 สัปดาห์ที่ผ่านมา)","กลั้นไม่ได้ หรือใส่สายสวนปัสสาวะแต่ดูแลเองไม่ได้|กลั้นไม่ได้บางครั้ง (น้อยกว่าวันละ 1 ครั้ง)|กลั้นได้เป็นปกติ"]];
+const Q0=[["กินอาหารเมื่อเตรียมไว้ให้","ตักกินเองไม่ได้/ต้องป้อน|ตักเองได้แต่ต้องมีคนช่วย|ตักกินเองได้เรียบร้อย"],
+["ล้างหน้า หวีผม แปรงฟัน โกนหนวด","ต้องมีคนช่วย|ทำเองได้"],
+["ลุกจากที่นอน/เตียงมานั่ง","ไม่นั่งหรือต้องช่วยมาก 2 คน|ช่วยพยุงมาก 1–2 คนจึงนั่งได้|ช่วยเล็กน้อยหรือบอกให้ทำ|ทำเองได้"],
+["ใช้ห้องน้ำ","ช่วยตัวเองไม่ได้|ทำเองได้บ้าง ต้องมีคนช่วย|ช่วยตัวเองได้ดี"],
+["เคลื่อนที่ภายในห้อง/บ้าน","เคลื่อนที่ไม่ได้|ใช้รถเข็นได้เอง|เดินได้ต้องมีคนช่วยพยุง|เดินได้เอง"],
+["สวมใส่เสื้อผ้า","ต้องมีคนสวมให้|ช่วยตัวเองได้ประมาณครึ่งหนึ่ง|ช่วยตัวเองได้ดี"],
+["การขึ้นลงบันได 1 ชั้น","ไม่สามารถ|ต้องการคนช่วย|ขึ้นลงได้เอง"],
+["การอาบน้ำ","ต้องมีคนช่วย|อาบเองได้"],
+["การกลั้นถ่ายอุจจาระ (1 สัปดาห์)","กลั้นไม่ได้/สวนเป็นประจำ|กลั้นไม่ได้เป็นบางครั้ง|กลั้นได้ปกติ"],
+["การกลั้นปัสสาวะ (1 สัปดาห์)","กลั้นไม่ได้/ใส่สายสวน|กลั้นไม่ได้เป็นบางครั้ง|กลั้นได้ปกติ"]];
+function openAdl(){
+ $("ms").innerHTML=`<h2 style="margin:0 0 2px;font-size:18px">ประเมิน ADL</h2><p style="margin:0;color:var(--mu);font-size:14px">${esc(cur.n)} · Barthel ADL · คะแนนเต็ม 20 · คะแนนรอบก่อน ${cur.adl}</p>`+
+ Q.map((q,i)=>`<div class="q"><b>${i+1}. ${q[0]}</b>${q[1].split("|").map((o,j)=>`<label class="opt"><input type="radio" name="q${i}" value="${j}"><span>${o} (${j} คะแนน)</span></label>`).join("")}</div>`).join("")+
+ `<div class="res" id="rs">ตอบแล้ว 0/10 ข้อ</div><div class="row"><button class="btn o" id="x">ยกเลิก</button><button class="btn" id="ok">บันทึกผล</button></div>`;
+ $("m").classList.add("open");
+ const calc=()=>{let s=0,n=0;Q.forEach((_,i)=>{const r=document.querySelector(`input[name=q${i}]:checked`);if(r){s+=+r.value;n++}});
+  const lv=s>=12?"กลุ่มติดสังคม":s>=5?"กลุ่มติดบ้าน":"กลุ่มติดเตียง";
+  $("rs").textContent=`ตอบแล้ว ${n}/10 ข้อ · คะแนน ${s}/20 · ${n==10?lv:"ตอบให้ครบเพื่อสรุปผล"}`;return[s,n]};
+ $("ms").onchange=calc;$("x").onclick=()=>$("m").classList.remove("open");
+ $("ok").onclick=()=>{const[s,n]=calc();if(n<10){toast("ตอบให้ครบ 10 ข้อ");return}const prev=cur.adl,t=new Date().toLocaleString("th-TH",{dateStyle:"medium"});cur.ah.unshift({s,prev,t,by:CGS[me]});cur.adl=s;const pp=cur;call("saveADL",{pid:PID(pp.i),items:Q.map((_,i)=>+document.querySelector(`input[name=q${i}]:checked`).value)}).catch(er=>{pp.ah.shift();pp.adl=prev;fail(er);render()});
+  $("ms").innerHTML=`<h2 style="margin:0 0 8px;font-size:18px">ผลประเมินรอบใหม่</h2><p style="margin:0 0 8px;color:var(--mu)">${esc(cur.n)}</p><div class="kv"><div>รอบก่อน<b>${prev}</b></div><div>รอบใหม่<b>${s}</b></div><div>ผล<b>${LV(s)}</b></div></div><p style="margin:12px 0 0">${s>prev?"ดีขึ้น":s<prev?"ลดลง":"เท่าเดิม"}${s!=prev?" "+Math.abs(s-prev)+" คะแนน":""} · ส่งให้ CM เห็นแล้ว</p><button class="btn w" id="cl" style="margin-top:14px">ปิด</button>`;
+  $("cl").onclick=()=>{$("m").classList.remove("open");render()};render()}}
+const PID=i=>"P"+String(i).padStart(3,"0");
+let NEXT="",TOKEN="";
+const call=(fn,arg)=>fetch(API_URL,{method:"POST",body:JSON.stringify({token:TOKEN,fn:fn,arg:arg||{}})}).then(r=>r.json()).then(j=>{if(!j.ok)throw new Error(j.error);return j.data});
+const fail=e=>toast("ผิดพลาด: "+String((e&&e.message)||e).replace(/^.*Error: /,"").slice(0,60));
+const busy=b=>{document.body.style.opacity=b?.6:1;document.body.style.pointerEvents=b?"none":""};
+const fmtT=ts=>new Date(ts).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"});
+const shrink=f=>new Promise(ok=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1024/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);ok(c.toDataURL("image/jpeg",.7))};im.src=URL.createObjectURL(f)});
+const apptCard=m=>{const td=new Date().toISOString().slice(0,10),L=m.map(p=>{const r=(V[p.i]||[]).find(x=>x.ap);return r&&r.ap>=td?{n:p.n,i:p.i,ap:r.ap}:null}).filter(Boolean).sort((a,b)=>a.ap<b.ap?-1:1);return `<div class="card" id="ap"><b>นัดหมายที่จะถึง</b>${L.length?L.map(x=>`<div class="vis" data-i="${x.i}" style="cursor:pointer"><b>${esc(x.n)}</b><p>${x.ap}</p></div>`).join(""):`<div class="empty">ยังไม่มีนัดหมาย</div>`}</div>`};
+const n9in=()=>{const a=D9.map((d,i)=>rd(i)),y=o=>Object.values(o).some(v=>v===1)?1:0,d2=a[1],pos=(d2.q1||0)+(d2.q2||0)>0;let s9="";if(pos){s9=0;for(let j=0;j<9;j++)s9+=d2["n"+j]||0}
+ const m=a[4],mna=m.n1+m.n2+m.n3+m.n4+m.n5+(m.n6>=0?m.n6:(m.n7||0)),o=a[8];
+ return{mc:a[0].a+a[0].b,q2:pos?1:0,q9:s9,q9i:pos?(d2.n8||0):"",fl:a[2].a,tug:a[2].b,ur:a[3].a,mna,sl:y(a[5]),ey:y(a[6]),ea:y(a[7]),or:y({a:o.a,b:o.b,c:o.c,d:o.d,e:o.e})}};
+const msg=t=>{$("q").parentElement.style.display="none";$("home").innerHTML=`<div class="card"><b>${t[0]}</b><p style="color:var(--mu);font-size:14px">${t[1]}</p></div>`};
+async function init(){
+ $("q").parentElement.style.display="none";
+ if(LIFF_ID.includes("ใส่")||API_URL.includes("ใส่")){msg(["ยังไม่ได้ตั้งค่า","แก้ค่า LIFF_ID และ API_URL ที่บรรทัดบนสุดของไฟล์ index.html ก่อนอัปโหลดขึ้นเว็บ"]);$("who").textContent="ยังไม่ตั้งค่า";return}
+ if(typeof liff==="undefined"){msg(["ต้องเปิดผ่านแอป LINE เท่านั้น","หน้านี้ใช้งานได้เมื่ออัปโหลดขึ้นเว็บแล้วเปิดจากลิงก์ https://liff.line.me/LIFF_ID ในแอป LINE (ดูตัวอย่างในหน้าแชต Claude ไม่ได้)"]);$("who").textContent="ต้องเปิดใน LINE";return}
+ try{
+  $("who").textContent="1/3 เริ่ม LINE…";await Promise.race([liff.init({liffId:LIFF_ID}),new Promise((_,no)=>setTimeout(()=>no(new Error("liff.init ใช้เวลานานเกิน 15 วินาที")),15000))]);$("who").textContent="2/3 ตรวจสิทธิ์…";
+  if(!liff.isLoggedIn()){liff.login();return}
+  TOKEN=liff.getIDToken();
+  $("who").textContent="3/3 โหลดข้อมูล…";const d=await call("boot");
+  Object.assign(CGS,d.names||{});CGS[d.code]=d.name;me=d.role==="CM"?"CM":d.code;
+  $("who").textContent=d.name+" · "+d.role;
+  if(d.needConsent){msg(["รอการยินยอม","กรุณากด “ยินยอม” ในแชต LINE OA ก่อนใช้งาน"]);return}
+  P=d.patients;P.forEach(p=>{p.ah.forEach(a=>{a.t=new Date(a.ts).toLocaleString("th-TH",{dateStyle:"medium"});a.by=CGS[a.by]||a.by});if(p.nd){p.nd.t=new Date(p.nd.ts).toLocaleString("th-TH",{dateStyle:"medium"});p.nd.by=CGS[p.nd.by]||p.nd.by}});
+  Object.entries(d.visits).forEach(([i,a])=>V[i]=a.map(r=>({...r,t:fmtT(r.ts),pu:[],ph:r.ph||0,by:CGS[r.by]||r.by,s:r.s,d:r.d})));
+  d.mh.forEach(x=>MH.push({...x,t:fmtT(x.ts)}));
+  if(me[0]==="R")REL[me]={n:d.name,pi:null};
+  $("q").parentElement.style.display=me[0]==="R"?"none":"";
+  NEXT=PARAMS.next==="rec"?"rec":PARAMS.next==="assess"?"rk":"";
+  if(PARAMS.pid){const k=parseInt(String(PARAMS.pid).replace(/\D/g,""),10);cur=P.find(p=>p.i==k)||null;if(cur){tab=me==="CM"?"his":"rec";$("q").value=cur.n}}
+  render();
+  if(me[0]==="R"&&PARAMS.page==="mh")openMh();
+  setTimeout(()=>{const g=id=>{const e=$(id);e&&e.scrollIntoView()};if(PARAMS.page==="alerts")g("al");if(PARAMS.page==="appt")g("ap");if(PARAMS.page==="search")$("q").focus()},60);
+ }catch(e){const m=String(e&&e.message||e);$("who").textContent="เปิดไม่สำเร็จ";msg(m.includes("not_registered")?["ยังไม่ได้ลงทะเบียน","กรุณาติดต่อ CM เพื่อลงทะเบียนบัญชี LINE ของคุณ หรือพิมพ์รหัสเชิญในแชต (สำหรับญาติ)"]:["เปิดระบบไม่สำเร็จ","กรุณาปิดแล้วเปิดใหม่จากเมนู LINE · "+m.slice(0,80)])}
+}
+init();
+</script></body></html>
