@@ -250,6 +250,15 @@ const n9in=()=>{const a=D9.map((d,i)=>rd(i)),y=o=>Object.values(o).some(v=>v===1
  const m=a[4],mna=m.n1+m.n2+m.n3+m.n4+m.n5+(m.n6>=0?m.n6:(m.n7||0)),o=a[8];
  return{mc:a[0].a+a[0].b,q2:pos?1:0,q9:s9,q9i:pos?(d2.n8||0):"",fl:a[2].a,tug:a[2].b,ur:a[3].a,mna,sl:y(a[5]),ey:y(a[6]),ea:y(a[7]),or:y({a:o.a,b:o.b,c:o.c,d:o.d,e:o.e})}};
 const msg=t=>{$("q").parentElement.style.display="none";$("home").innerHTML=`<div class="card"><b>${t[0]}</b><p style="color:var(--mu);font-size:14px">${t[1]}</p></div>`};
+async function showUid(){
+ let uid="";
+ try{const t=liff.getDecodedIDToken();uid=t&&t.sub||""}catch(_){}
+ if(!uid){try{uid=(await liff.getProfile()).userId}catch(_){}}
+ const box=document.createElement("div");box.className="card";
+ box.innerHTML='<b>รหัส LINE userId ของคุณ</b><p style="color:var(--mu);font-size:14px">กดคัดลอกแล้วส่งให้ CM เพื่อใส่ในชีต “ผู้ใช้”</p><p id="uidv" style="word-break:break-all;font-family:monospace;font-size:13px;user-select:all">'+(uid||"อ่านค่าไม่ได้ (ตรวจสอบ scope openid/profile ของ LIFF)")+'</p>'+(uid?'<button id="uidc" style="padding:10px 16px;border-radius:10px;border:0;background:#1f5c4d;color:#fff;font-size:15px">คัดลอก</button>':'');
+ $("home").appendChild(box);
+ const b=$("uidc");if(b)b.onclick=async()=>{try{await navigator.clipboard.writeText(uid)}catch(_){const r=document.createRange();r.selectNodeContents($("uidv"));const g=getSelection();g.removeAllRanges();g.addRange(r);document.execCommand("copy")}b.textContent="คัดลอกแล้ว ✓"};
+}
 async function init(){
  $("q").parentElement.style.display="none";
  if(LIFF_ID.includes("ใส่")||API_URL.includes("ใส่")){msg(["ยังไม่ได้ตั้งค่า","แก้ค่า LIFF_ID และ API_URL ที่บรรทัดบนสุดของไฟล์ index.html ก่อนอัปโหลดขึ้นเว็บ"]);$("who").textContent="ยังไม่ตั้งค่า";return}
@@ -272,7 +281,7 @@ async function init(){
   render();
   if(me[0]==="R"&&PARAMS.page==="mh")openMh();
   setTimeout(()=>{const g=id=>{const e=$(id);e&&e.scrollIntoView()};if(PARAMS.page==="alerts")g("al");if(PARAMS.page==="appt")g("ap");if(PARAMS.page==="search")$("q").focus()},60);
- }catch(e){const m=String(e&&e.message||e);$("who").textContent="เปิดไม่สำเร็จ";msg(m.includes("not_registered")?["ยังไม่ได้ลงทะเบียน","กรุณาติดต่อ CM เพื่อลงทะเบียนบัญชี LINE ของคุณ หรือพิมพ์รหัสเชิญในแชต (สำหรับญาติ)"]:["เปิดระบบไม่สำเร็จ","กรุณาปิดแล้วเปิดใหม่จากเมนู LINE · "+m.slice(0,80)])}
+ }catch(e){const m=String(e&&e.message||e);$("who").textContent="เปิดไม่สำเร็จ";(m.includes("not_registered")?(msg(["ยังไม่ได้ลงทะเบียน","กรุณาติดต่อ CM เพื่อลงทะเบียนบัญชี LINE ของคุณ หรือพิมพ์รหัสเชิญในแชต (สำหรับญาติ)"]),showUid()):msg(["เปิดระบบไม่สำเร็จ","กรุณาปิดแล้วเปิดใหม่จากเมนู LINE · "+m.slice(0,80)]))}
 }
 init();
 </script></body></html>
